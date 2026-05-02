@@ -106,6 +106,15 @@ def supplier_update(request, pk):
 
     return redirect('supplier_list')
     
+@login_required
+def supplier_delete(request, pk):
+    supplier = get_object_or_404(Supplier, pk=pk)
+
+    if request.method == 'POST':
+        supplier.delete()
+
+    return redirect('supplier_list')
+    
 def logout_view(request):
     logout(request)
     return redirect('login')

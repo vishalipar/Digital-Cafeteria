@@ -11,5 +11,6 @@ urlpatterns = [
     path('suppliers/', views.supplier_list, name='supplier_list'),
     path('suppliers/add/', views.supplier_create, name='supplier_add'),
     path('suppliers/edit/<int:pk>/', views.supplier_update, name='supplier_edit'),
+    path('suppliers/delete/<int:pk>/', views.supplier_delete, name='supplier_delete'),
     path('logout/', views.logout_view, name='logout'),
 ]
