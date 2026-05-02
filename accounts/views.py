@@ -94,6 +94,18 @@ def supplier_create(request):
 
     return redirect('supplier_list')
     
+@login_required
+def supplier_update(request, pk):
+    supplier = get_object_or_404(Supplier, pk=pk)
+
+    if request.method == 'POST':
+        supplier.name = request.POST.get('name')
+        supplier.contact = request.POST.get('contact')
+        supplier.address = request.POST.get('address')
+        supplier.save()
+
+    return redirect('supplier_list')
+    
 def logout_view(request):
     logout(request)
     return redirect('login')
