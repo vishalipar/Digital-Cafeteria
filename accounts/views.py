@@ -74,6 +74,11 @@ def product_delete(request, pk):
 
     return render(request, 'products/delete.html', {'product': product})
     
+@login_required
+def supplier_list(request):
+    suppliers = Supplier.objects.all()
+    return render(request, 'suppliers/list.html', {'suppliers': suppliers})
+    
 def logout_view(request):
     logout(request)
     return redirect('login')
