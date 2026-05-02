@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from .models import Product, Supplier
@@ -50,6 +50,19 @@ def product_create(request):
             form.save()
     return redirect('product_list')
 
+@login_required
+def product_update(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = ProductForm(instance=product)
+
+    return render(request, 'products/form.html', {'form': form})
     
 def logout_view(request):
     logout(request)
