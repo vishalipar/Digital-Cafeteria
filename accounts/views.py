@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from .models import Product, Supplier
+from .forms import ProductForm
 
 def login_view(request):
     if request.method == 'POST':
@@ -35,7 +36,20 @@ def dashboard(request):
 @login_required
 def product_list(request):
     products = Product.objects.all()
-    return render(request, 'products/list.html', {'products': products})
+    suppliers = Supplier.objects.all()
+    return render(request, 'products/list.html', {
+        'products': products,
+        'suppliers': suppliers
+        })
+    
+@login_required
+def product_create(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    return redirect('product_list')
+
     
 def logout_view(request):
     logout(request)

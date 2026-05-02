@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+    <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-lg">
+    
+        <h2 class="text-2xl font-bold mb-6 text-center">
+            {% if form.instance.pk %}Edit Product{% else %}Add Product{% endif %}
+        </h2>
+    
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+    
+            <!-- Name -->
+            <div>
+                <label class="block text-sm font-medium mb-1">Product Name</label>
+                {{ form.name }}
+            </div>
+    
+            <!-- Price -->
+            <div>
+                <label class="block text-sm font-medium mb-1">Price</label>
+                {{ form.price }}
+            </div>
+    
+            <!-- Quantity -->
+            <div>
+                <label class="block text-sm font-medium mb-1">Quantity</label>
+                {{ form.quantity }}
+            </div>
+    
+            <!-- Supplier -->
+            <div>
+                <label class="block text-sm font-medium mb-1">Supplier</label>
+                {{ form.supplier }}
+            </div>
+    
+            <!-- Image -->
+            <div>
+                <label class="block text-sm font-medium mb-1">Product Image</label>
+                {{ form.image }}
+            </div>
+    
+            <!-- Buttons -->
+            <div class="flex justify-between mt-6">
+                <a href="{% url 'product_list' %}" 
+                   class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">
+                   Cancel
+                </a>
+    
+                <button type="submit"
+                    class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>
