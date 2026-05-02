@@ -79,6 +79,21 @@ def supplier_list(request):
     suppliers = Supplier.objects.all()
     return render(request, 'suppliers/list.html', {'suppliers': suppliers})
     
+@login_required
+def supplier_create(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        contact = request.POST.get('contact')
+        address = request.POST.get('address')
+
+        Supplier.objects.create(
+            name=name,
+            contact=contact,
+            address=address
+        )
+
+    return redirect('supplier_list')
+    
 def logout_view(request):
     logout(request)
     return redirect('login')

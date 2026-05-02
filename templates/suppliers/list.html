@@ -39,6 +39,30 @@
         </tbody>
     </table>
 </div>
+
+<!-- Add Modal -->
+<div id="addModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
+    <div class="bg-white p-6 rounded w-96">
+        <h2 class="text-xl font-bold mb-4">Add Supplier</h2>
+    
+        <form method="POST" action="{% url 'supplier_add' %}">
+            {% csrf_token %}
+            <input name="name" placeholder="Name" class="w-full mb-2 p-2 border rounded" required>
+            <input name="contact" placeholder="Contact" class="w-full mb-2 p-2 border rounded" required>
+            <textarea name="address" placeholder="Address" class="w-full mb-2 p-2 border rounded" required></textarea>
+    
+            <div class="flex justify-between">
+                <button type="button" onclick="closeAddModal()" class="bg-gray-300 px-3 py-1 rounded">Cancel</button>
+                <button class="bg-green-500 text-white px-3 py-1 rounded">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
     
 </body>
+
+<script>
+    function openAddModal(){ document.getElementById('addModal').classList.remove('hidden'); }
+    function closeAddModal(){ document.getElementById('addModal').classList.add('hidden'); }
+</script>    
 </html>
