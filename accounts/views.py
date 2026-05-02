@@ -64,6 +64,16 @@ def product_update(request, pk):
 
     return render(request, 'products/form.html', {'form': form})
     
+@login_required
+def product_delete(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
+    if request.method == 'POST':
+        product.delete()
+        return redirect('product_list')
+
+    return render(request, 'products/delete.html', {'product': product})
+    
 def logout_view(request):
     logout(request)
     return redirect('login')

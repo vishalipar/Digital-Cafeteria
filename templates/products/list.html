@@ -36,7 +36,7 @@
                 <td>{{ p.quantity }}</td>
                 <td>
                     <a onclick="openEditModal({{ p.id }}, '{{ p.name }}', {{ p.price }}, {{ p.quantity }}, '{{ p.supplier.id }}','{% if p.image %}{{ p.image.url }}{% endif %}')" class="text-blue-500 cursor-pointer">Edit</a> |
-                    <a href="#" class="text-red-500">Delete</a>
+                    <a onclick="openDeleteModal({{ p.id }}, '{{ p.name }}')"  class="text-red-500 cursor-pointer">Delete</a>
                 </td>
             </tr>
             {% empty %}
@@ -128,6 +128,33 @@
 
 </div>
 
+<!-- Delete Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
+    <div class="bg-white p-6 rounded-xl w-full max-w-sm">
+        <h2 class="text-xl font-bold mb-4 text-red-600">Delete Product</h2>
+
+        <p class="mb-4">
+            Are you sure you want to delete 
+            <span id="delete_product_name" class="font-bold"></span>?
+        </p>
+
+        <form id="deleteForm" method="POST">
+            {% csrf_token %}
+            <div class="flex justify-between">
+                <button type="button" onclick="closeDeleteModal()" 
+                    class="px-4 py-2 bg-gray-300 rounded">
+                    Cancel
+                </button>
+
+                <button type="submit" 
+                    class="px-4 py-2 bg-red-500 text-white rounded">
+                    Delete
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 </body>
 
 <script id="p1k3qv">
@@ -162,6 +189,18 @@
     
     function closeEditModal(){
         document.getElementById('editModal').classList.add('hidden');
+    }
+    
+    function openDeleteModal(id, name) {
+        document.getElementById('deleteModal').classList.remove('hidden');
+    
+        document.getElementById('delete_product_name').innerText = name;
+    
+        document.getElementById('deleteForm').action = `/products/delete/${id}/`;
+    }
+    
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
     }
     </script>
 </html>
