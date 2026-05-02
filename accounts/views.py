@@ -32,6 +32,11 @@ def dashboard(request):
     }
     return render(request, 'dashboard.html', context)
     
+@login_required
+def product_list(request):
+    products = Product.objects.all()
+    return render(request, 'products/list.html', {'products': products})
+    
 def logout_view(request):
     logout(request)
     return redirect('login')
